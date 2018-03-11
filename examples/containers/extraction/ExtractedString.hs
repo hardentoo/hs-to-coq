@@ -3,10 +3,6 @@ module ExtractedString where
 import Data.Char
 import Data.Bits
 
-default (Int)
-
-data Vector a = Nil | Cons a Int (Vector a)
-
 {-- If this appears, you're using Ascii internals. Please don't --}
 asciiToChar :: Bool -> Bool -> Bool -> Bool -> Bool -> Bool -> Bool -> Bool
             -> Char
