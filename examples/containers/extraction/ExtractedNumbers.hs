@@ -22,38 +22,45 @@ deriving instance Real a => Real (NonNegative a)
 deriving instance System.Random.Random a => System.Random.Random (NonNegative a)
 ----------------------------------------------------
 
-instance Show BinNums.Coq_positive where
-  show bn = reverse (go bn) where
-    go BinNums.Coq_xH = "1"
-    go (BinNums.Coq_xI bn) = '1' : go bn
-    go (BinNums.Coq_xO bn) = 'O' : go bn
+-- instance Show BinNums.Coq_positive where
+--   show bn = reverse (go bn) where
+--     go BinNums.Coq_xH = "1"
+--     go (BinNums.Coq_xI bn) = '1' : go bn
+--     go (BinNums.Coq_xO bn) = 'O' : go bn
   
 
-toPositive :: Integer -> BinNums.Coq_positive
-toPositive x | x <= 0 = error "must call with positive int"
-toPositive 1 = BinNums.Coq_xH
-toPositive x = let b1 = x `mod` 2
-                   b2 = x `div` 2 in
-               if b1 == 1 then BinNums.Coq_xI (toPositive b2) else
-                               BinNums.Coq_xO (toPositive b2)
+-- toPositive :: Integer -> BinNums.Coq_positive
+-- toPositive x | x <= 0 = error "must call with positive int"
+-- toPositive 1 = BinNums.Coq_xH
+-- toPositive x = let b1 = x `mod` 2
+--                    b2 = x `div` 2 in
+--                if b1 == 1 then BinNums.Coq_xI (toPositive b2) else
+--                                BinNums.Coq_xO (toPositive b2)
 
-fromPositive :: BinNums.Coq_positive -> Integer
-fromPositive BinNums.Coq_xH = 1
-fromPositive (BinNums.Coq_xI bn) = fromPositive bn * 2 + 1
-fromPositive (BinNums.Coq_xO bn) = fromPositive bn * 2
+-- fromPositive :: BinNums.Coq_positive -> Integer
+-- fromPositive BinNums.Coq_xH = 1
+-- fromPositive (BinNums.Coq_xI bn) = fromPositive bn * 2 + 1
+-- fromPositive (BinNums.Coq_xO bn) = fromPositive bn * 2
  
-toBinZ :: Integer -> BinNums.Z
-toBinZ 0 = BinNums.Z0
-toBinZ x | x < 0 = BinNums.Zneg (toPositive (abs x))
-toBinZ x | x > 0 = BinNums.Zpos (toPositive x)
+toBinZ :: Integer -> Integer
+toBinZ = Prelude.id
 
-fromBinZ :: BinNums.Z -> Integer
-fromBinZ BinNums.Z0 = 0
-fromBinZ (BinNums.Zneg bn) = - (fromPositive bn)
-fromBinZ (BinNums.Zpos bn) = fromPositive bn
+fromBinZ :: Integer -> Integer
+fromBinZ = Prelude.id
+
+-- toBinZ :: Integer -> BinNums.Z
+-- toBinZ 0 = BinNums.Z0
+-- toBinZ x | x < 0 = BinNums.Zneg (toPositive (abs x))
+-- toBinZ x | x > 0 = BinNums.Zpos (toPositive x)
+
+-- fromBinZ :: BinNums.Z -> Integer
+-- fromBinZ BinNums.Z0 = 0
+-- fromBinZ (BinNums.Zneg bn) = - (fromPositive bn)
+-- fromBinZ (BinNums.Zpos bn) = fromPositive bn
 
 ----------------------------------------------------
 
+{-
 
 instance Integral Num.Int where
   quot      = BinInt._Z__quot
@@ -106,7 +113,6 @@ instance Data.Bits.Bits Num.Int where
 
 
 
-
 ----------------------------------------------------
 
 instance Real Num.Int where
@@ -116,3 +122,4 @@ instance Enum Num.Int where
   toEnum = undefined
   fromEnum = undefined
   
+-}
